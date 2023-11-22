@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %}
+Guardar
+{% endblock titulo %}
+
+{% block contenido %}
+<div class="news_section layout_padding">
+    <div class="container">
+        <div>
+            <h1 class="health_taital">Guardar Informe</h1>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="docpicker" accept=".doc, .docx">
+                <label class="custom-file-label" for="docpicker">Seleccionar archivo</label>
+            </div>
+        </div>
+        <div class="news_section_2 layout_padding">
+            <div class="getquote_bt"><a href="#">Guardar <i class="fas fa-file-upload fa-lg"></i></a></div>
+        </div>
+    </div>
+</div>
+<script>
+    // Escucha el evento de cambio en el campo de entrada de archivos
+    $('#docpicker').on('change', function() {
+        // Obtiene el nombre del archivo seleccionado
+        var fileName = $(this).val().split('\\').pop();
+        
+        // Actualiza la etiqueta del archivo con el nombre seleccionado
+        $(this).next('.custom-file-label').html(fileName);
+    });
+</script>
+{% endblock contenido %}

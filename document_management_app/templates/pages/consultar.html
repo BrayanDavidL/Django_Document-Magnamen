@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %}
+Consultar
+{% endblock titulo %}
+
+{% block contenido %}
+<div class="news_section layout_padding">
+    <div class="container">
+        <div>
+            <h1 class="health_taital">Consultar</h1>
+            <input type="text" class="form-control" placeholder="Ingrese el codigo del documento">
+        </div>
+        <div class="news_section_2 layout_padding">
+            <div class="getquote_bt"><a href="#">Imprimir <i class="fas fa-file-pdf fa-lg"></i></a></div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
