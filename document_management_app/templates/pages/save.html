@@ -7,26 +7,48 @@ Guardar
 {% block contenido %}
 <div class="news_section layout_padding">
     <div class="container">
-        <div>
-            <h1 class="health_taital">Guardar Informe</h1>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="docpicker" accept=".doc, .docx">
-                <label class="custom-file-label" for="docpicker">Seleccionar archivo</label>
+        <h1 class="health_taital">Guardar Informe</h1>
+        <form enctype="multipart/form-data" method="post" id="documentForm">
+            {% csrf_token %}
+            {% for campo in formulario %}
+            <div class="mt-3 px-4">  
+                <label class="form-label"><h3>{{ campo.label }}</h3></label>                                  
+                {% if campo.field.widget.input_type == 'select' %}
+                    {% with campo_class='form-label' %}
+                        {{ campo }}
+                    {% endwith %}
+                {% else %}                     
+                    <input 
+                    type="{{ campo.field.widget.input_type }}" 
+                    class="form-control" 
+                    name="{{ campo.name }}"
+                    id=""
+                    placeholder="{{ campo.label }}">
+                {% endif %}    
             </div>
-        </div>
-        <div class="news_section_2 layout_padding">
-            <div class="getquote_bt"><a href="#">Guardar <i class="fas fa-file-upload fa-lg"></i></a></div>
-        </div>
+            {% endfor %}            
+            <div class="news_section_2 layout_padding">                
+                <div class="getquote_bt">
+                    <!-- Agrega un atributo onclick para activar el formulario -->
+                    <a href="#" onclick="activarFormulario()">Guardar <i class="fas fa-file-upload fa-lg"></i></a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <script>
     // Escucha el evento de cambio en el campo de entrada de archivos
-    $('#docpicker').on('change', function() {
+    $('#docpicker').on('change', function () {
         // Obtiene el nombre del archivo seleccionado
         var fileName = $(this).val().split('\\').pop();
-        
+
         // Actualiza la etiqueta del archivo con el nombre seleccionado
         $(this).next('.custom-file-label').html(fileName);
     });
+
+    // Función para activar el formulario y enviarlo
+    function activarFormulario() {
+        document.getElementById('documentForm').submit();
+    }
 </script>
 {% endblock contenido %}

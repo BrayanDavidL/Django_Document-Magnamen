@@ -11,9 +11,36 @@ Consultar
             <h1 class="health_taital">Consultar</h1>
             <input type="text" class="form-control" placeholder="Ingrese el codigo del documento">
         </div>
-        <div class="news_section_2 layout_padding">
-            <div class="getquote_bt"><a href="#">Imprimir <i class="fas fa-file-pdf fa-lg"></i></a></div>
+        <div class="container mt-5">
+            <div class="table-responsive">
+                <table class="table table-borderless mb-0">
+                    <thead>
+                        <tr style="background-color: #15e4d0; color: white;">
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for consulta in consulta %}
+                        <tr>
+                            <td scope="row">{{ consulta.name }}</td>
+                            <td>{{ consulta.unique_code }}</td>
+                            <td>{{ consulta.auth_user_id }}</td>
+                            <td class="d-flex justify-content-center">
+                                <a href="#" class="btn btn-info w-50" style="background-color: #15e4d0;">
+                                    Descargar <i class="fas fa-file-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
 {% endblock contenido %}

@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
+from .models import Document
+from .forms import DocumentForm
+from django.utils import timezone
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -53,8 +57,19 @@ def index(request):
     return render(request, 'pages/index.html')
 
 def consultar(request):
-    return render(request, 'pages/consultar.html')
+    consulta = Document.objects.all()
+    return render(request, 'pages/consultar.html',{'consulta':consulta})
+@login_required
+def save(request):  
+    if request.method == 'POST':
+        formulario = DocumentForm(request.POST, request.FILES)
+        if formulario.is_valid():            
+            documento = formulario.save(commit=False)
+            documento.auth_user_id = request.user.id 
+            documento.save()
+            return redirect('save')
+    else:       
+        formulario = DocumentForm()
 
-def save(request):
-    return render(request, 'pages/save.html')
+    return render(request, 'pages/save.html', {'formulario': formulario})
 
